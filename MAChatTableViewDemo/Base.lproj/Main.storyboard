@@ -17,14 +17,29 @@
                     <view key="view" contentMode="scaleToFill" id="Hzy-5d-4L7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3VT-Mc-7sP" customClass="ChatTableView" customModule="MAChatTableViewDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3VT-Mc-7sP" firstAttribute="leading" secondItem="9YZ-0L-fjA" secondAttribute="leading" id="0kA-vG-dhr"/>
+                            <constraint firstAttribute="bottom" secondItem="3VT-Mc-7sP" secondAttribute="bottom" id="Fiu-Bv-ULm"/>
+                            <constraint firstItem="3VT-Mc-7sP" firstAttribute="trailing" secondItem="9YZ-0L-fjA" secondAttribute="trailing" id="OtL-5b-Hse"/>
+                            <constraint firstItem="3VT-Mc-7sP" firstAttribute="top" secondItem="9YZ-0L-fjA" secondAttribute="top" id="l7Y-wx-npD"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="9YZ-0L-fjA"/>
                     </view>
                     <navigationItem key="navigationItem" id="Mem-K1-bX8"/>
+                    <connections>
+                        <outlet property="chatTableView" destination="3VT-Mc-7sP" id="sCS-n9-naC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WkA-dz-Da4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="268" y="134"/>
+            <point key="canvasLocation" x="268" y="133.74384236453201"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wV9-sS-XiW">

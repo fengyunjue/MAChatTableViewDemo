@@ -33,22 +33,22 @@ class ChatTableView: UITableView, Reloadable {
             self.register(ChatVoiceCell.self, forCellReuseIdentifier: ChatVoiceCell.identifier)
             self.register(ChatSystemCell.self, forCellReuseIdentifier: ChatSystemCell.identifier)
     }
-    // 进入界面时候滑动到底部
-    var viewAppearScrollBottom = true
-    
+    struct xixi { static var isScrollBottom: Bool = false }
+    deinit {
+        xixi.isScrollBottom = false
+    }
 }
 
 extension ChatTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //只在初始化的时候执行
-        if viewAppearScrollBottom == true {
-            viewAppearScrollBottom = false
+        DispatchQueue.once(&xixi.isScrollBottom, {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.005) {
                 if self.models.count > 0 {
                     tableView.scrollToRow(at: IndexPath(row: self.models.count - 1, section: 0), at: .bottom, animated: false)
                 }
             }
-        }
+        })
         return models.count
     }
     

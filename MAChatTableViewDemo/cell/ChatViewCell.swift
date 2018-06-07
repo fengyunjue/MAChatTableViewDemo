@@ -80,6 +80,7 @@ public class ChatMessageCell: ChatViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         fatalError("should use init(style:reuseIdentifier:messageView:backgroundImageView:) initialize")
     }
+    // 将messageView和backgroundImageView由子视图决定使用什么View
     public init(style: UITableViewCellStyle, reuseIdentifier: String?, messageView: UIView, backgroundImageView: UIImageView? = UIImageView.init()) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

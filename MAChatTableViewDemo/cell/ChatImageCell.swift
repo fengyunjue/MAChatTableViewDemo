@@ -9,6 +9,20 @@
 import UIKit
 import Cartography
 
+private var cache: NSCache<AnyObject, AnyObject>?
+func cleanCache() {
+    cache?.removeAllObjects()
+    cache = nil
+}
+func imageCache() -> NSCache<AnyObject, AnyObject> {
+    if cache == nil {
+        cache = NSCache<AnyObject, AnyObject>()
+        cache!.countLimit = 20
+        cache!.totalCostLimit = 1042
+    }
+    return cache!
+}
+
 public class ChatImageCell: ChatMessageCell {
     public let contentImageView = UIImageView.init()
     

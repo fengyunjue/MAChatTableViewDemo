@@ -1,6 +1,6 @@
 PODS:
   - Cartography (3.0.2)
-  - MAExtension/Base (0.1.9):
+  - MAExtension/Base (0.1.10):
     - NSLogger/Swift
     - SwiftyJSON
   - NSLogger/ObjC (1.9.0)
@@ -27,12 +27,12 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MAExtension:
-    :commit: b32b7967cea08bd61b17c2d33749658b3942403e
+    :commit: c8505be749d00e11ae015049477c4b8c9a7611f0
     :git: https://github.com/fengyunjue/MAExtension.git
 
 SPEC CHECKSUMS:
   Cartography: 231190d7d0b3107ce8d67c54189f059a509b3760
-  MAExtension: 25d0d6ff549e19ff9b553b6dc881aee083b32151
+  MAExtension: f643ba830ba03332c920a569c1251df30684b8c2
   NSLogger: 9f8f5ab017eb34d1a138f4905dc7fb8e9a0e3186
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f

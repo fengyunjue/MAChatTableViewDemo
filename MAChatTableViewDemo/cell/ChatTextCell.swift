@@ -13,6 +13,7 @@ public class ChatTextCell: ChatMessageCell {
     public let contentLabel = UILabel.init()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        // 将MessageView设置成contentLabel,父类会设置其布局
         super.init(style: style, reuseIdentifier: reuseIdentifier, messageView: contentLabel)
         
         contentLabel.font = UIFont.systemFont(ofSize: 16)

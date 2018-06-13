@@ -18,13 +18,13 @@ class ChatViewController: UIViewController {
     var isScrollBottom = true
     var isDragging = false {
         didSet {
-            if isDragging == false && unReadMessages.count > 0 {
-                messagePool.push(unReadMessages)
-                unReadMessages = []
+            if isDragging == false && unLoadMessages.count > 0 {
+                messagePool.push(unLoadMessages)
+                unLoadMessages = []
             }
         }
     }
-    var unReadMessages:[(Message, RefreshMode)] = []
+    var unLoadMessages:[(Message, RefreshMode)] = []
     var messagePool: MessagePool<(Message, RefreshMode)>!
     
     // 是否添加消息
@@ -78,7 +78,7 @@ extension ChatViewController : UITableViewDelegate{
         // 设置缓存池
         messagePool = MessagePool.init(interval: 0.5, maxPop: 50) {[unowned self] (messages) in
             if messages.count == 0 { return }
-            // 不滑动时才更新添加的数据
+            // tableView不滑动时,才更新添加的数据
             if self.tableView.isDragging == false{
                 if self.isScrollBottom {
                     self.tableView.refresh(messages)
@@ -87,13 +87,12 @@ extension ChatViewController : UITableViewDelegate{
                     newMessages[newMessages.count-1].1.type = .hold
                     self.tableView.refresh(newMessages)
                 }
-            }else{
-                self.unReadMessages.append(contentsOf: messages)
+            }else{// tableView滑动时,缓存消息
+                self.unLoadMessages.append(contentsOf: messages)
             }
         }
     }
     
-
     // 添加消息
     func add(messages: [Message]) {
         if messages.count == 0 { return }

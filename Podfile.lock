@@ -1,12 +1,6 @@
 PODS:
   - Cartography (3.0.2)
-  - MAExtension/Base (0.1.10):
-    - NSLogger/Swift
-    - SwiftyJSON
-  - NSLogger/ObjC (1.9.0)
-  - NSLogger/Swift (1.9.0):
-    - NSLogger/ObjC
-  - SwiftyJSON (4.1.0)
+  - MAExtension/Base (0.1.11)
   - "UITableView+FDTemplateLayoutCell (1.6)"
 
 DEPENDENCIES:
@@ -17,8 +11,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Cartography
-    - NSLogger
-    - SwiftyJSON
     - "UITableView+FDTemplateLayoutCell"
 
 EXTERNAL SOURCES:
@@ -27,14 +19,12 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MAExtension:
-    :commit: b21413e6768615b5a67ca0a9ae25c0e0dcb25b71
+    :commit: 117ee87720c772fce02524bd59dcd1bd9b920e88
     :git: https://github.com/fengyunjue/MAExtension.git
 
 SPEC CHECKSUMS:
   Cartography: 231190d7d0b3107ce8d67c54189f059a509b3760
-  MAExtension: f643ba830ba03332c920a569c1251df30684b8c2
-  NSLogger: 9f8f5ab017eb34d1a138f4905dc7fb8e9a0e3186
-  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  MAExtension: 60a08883bef4fad1d39dff6b9d6d4e6b34aadedc
   "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
 
 PODFILE CHECKSUM: f55cc47719ba304d2a821df92947862fc729dae8

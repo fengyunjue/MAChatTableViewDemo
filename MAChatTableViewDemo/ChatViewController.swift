@@ -14,9 +14,19 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var toolView: UIView!
     @IBOutlet weak var toolViewBottomLayout: NSLayoutConstraint!
     @IBOutlet weak var tableViewTopLayout: NSLayoutConstraint!
-        
+    
+    var isScrollBottom = true
+    var isDragging = false {
+        didSet {
+            if isDragging == false && unReadMessages.count > 0 {
+                messagePool.push(unReadMessages)
+                unReadMessages = []
+            }
+        }
+    }
+    var unReadMessages:[(Message, RefreshMode)] = []
     var messagePool: MessagePool<(Message, RefreshMode)>!
-
+    
     // 是否添加消息
     var isAddMessage = true
     var timer: Timer?
@@ -26,27 +36,9 @@ class ChatViewController: UIViewController {
         
         self.tableView.delegate = self
 
-        startObserve()
+        observeKeyBoard()
     
-        // 定时添加消息
-        timer = Timer.timer(interval: 0.1, repeats: true, block: {[weak self] (timer) in
-            if let weakSelf = self {
-                if weakSelf.isAddMessage == true {
-                    weakSelf.add(messages: [Message.randomMessage()])
-                }
-            }
-        })
-        // 设置缓存池
-        messagePool = MessagePool.init(interval: 0.5, maxPop: 50) {[unowned self] (messages) in
-            if messages.count > 0 {
-                self.tableView.refresh(messages)
-            }
-        }
-    }
-    // 添加消息
-    func add(messages: [Message]){
-        if messages.count == 0 { return }
-        messagePool.push(messages.map{($0, .insert(.bottom))})
+        setupMessageManager()
     }
     
     @IBAction func refresh(_ sender: UIBarButtonItem) {
@@ -71,10 +63,62 @@ class ChatViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 }
+// MARK: - 下拉加载消息时,显示未读消息数
+extension ChatViewController : UITableViewDelegate{
+    // 初始化消息管理
+    func setupMessageManager(){
+        // 定时添加消息
+        timer = Timer.timer(interval: 0.1, repeats: true, block: {[weak self] (timer) in
+            if let weakSelf = self {
+                if weakSelf.isAddMessage == true {
+                    weakSelf.add(messages: [Message.randomMessage()])
+                }
+            }
+        })
+        // 设置缓存池
+        messagePool = MessagePool.init(interval: 0.5, maxPop: 50) {[unowned self] (messages) in
+            if messages.count == 0 { return }
+            // 不滑动时才更新添加的数据
+            if self.tableView.isDragging == false{
+                if self.isScrollBottom {
+                    self.tableView.refresh(messages)
+                }else{// 如果不是在底部,需要添加到底部的消息缓存,在上面的消息更新
+                    var newMessages = messages
+                    newMessages[newMessages.count-1].1.type = .hold
+                    self.tableView.refresh(newMessages)
+                }
+            }else{
+                self.unReadMessages.append(contentsOf: messages)
+            }
+        }
+    }
+    
+
+    // 添加消息
+    func add(messages: [Message]) {
+        if messages.count == 0 { return }
+        messagePool.push(messages.map{($0, .insert(.bottom))})
+    }
+    
+// MARK: - Delegate
+    /// 监听是否在tableView是否在最底部
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.isDragging = scrollView.isDragging
+        if scrollView.isDragging, let cell : ChatViewCell = tableView.visibleCells.last as? ChatViewCell, let message = cell.message , let last = tableView.models.last {
+            self.isScrollBottom = message == last
+        }
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.toolView.endEditing(true)
+    }
+}
+
+
 // MARK: - 键盘的监听
 extension ChatViewController {
     
-    func startObserve(){
+    func observeKeyBoard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notify:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notify:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
     }
@@ -106,8 +150,4 @@ extension ChatViewController {
     }
 }
 
-extension ChatViewController: UITableViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.toolView.endEditing(true)
-    }
-}
+

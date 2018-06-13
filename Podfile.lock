@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MAExtension:
-    :commit: c8505be749d00e11ae015049477c4b8c9a7611f0
+    :commit: b21413e6768615b5a67ca0a9ae25c0e0dcb25b71
     :git: https://github.com/fengyunjue/MAExtension.git
 
 SPEC CHECKSUMS:
